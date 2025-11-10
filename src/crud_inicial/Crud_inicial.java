@@ -8,22 +8,22 @@ import java.util.ArrayList;
  * @author cristian.moreira
  */
 public class Crud_inicial {
-
+    
     static class Funcionario {
-
+        
         String nome;
         String funcao;
         double salario;
-
+        
         public Funcionario(String nome, String funcao, double salario) {
             this.nome = nome;
             this.funcao = funcao;
             this.salario = salario;
         }
     }
-
+    
     static ArrayList<Funcionario> funcionarios = new ArrayList<>();
-
+    
     public static void main(String[] args) {
         while (true) {
             String opcao = JOptionPane.showInputDialog("Programa de cadastro de funcionarios da ABER\n\nEscolha uma opção:\n1 - Cadastrar Funcionário"
@@ -41,43 +41,60 @@ public class Crud_inicial {
             }
             switch (escolha) {
                 case 1:
-                    String nomeFuncionario = JOptionPane.showInputDialog("Insira nome do funcionario\n\n");
-                    if (nomeFuncionario == null || nomeFuncionario.trim().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
-                    }
-                    boolean existeNome = false;
-                    for (Funcionario funcionario : funcionarios) {
-                        if (funcionario.nome.equalsIgnoreCase(nomeFuncionario)) {
-                            existeNome = true;
+                    boolean incrementaFuncionario = true;
+                    while (incrementaFuncionario) {
+                        String nomeFuncionario = JOptionPane.showInputDialog("Insira nome do funcionario\n\n");
+                        if (nomeFuncionario == null || nomeFuncionario.trim().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
                             break;
                         }
-                    }
-                    if (existeNome) {
-                        JOptionPane.showMessageDialog(null, "Já existe um funcionário com esse nome, escolha outro por gentileza");
-                        break;
-                    }
-
-                    String funcaoFuncionario = JOptionPane.showInputDialog("Insira função do funcionário\n\n");
-                    if (funcaoFuncionario == null || funcaoFuncionario.trim().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
-                    }
-                    String salarioFuncionario = JOptionPane.showInputDialog("Insira salário do funcionário\n\n");
-                    if (salarioFuncionario == null || salarioFuncionario.trim().isEmpty()) {
-                        JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
-                    }
-                    double salario = 0;
-                    try {
-                        salario = Double.parseDouble(salarioFuncionario.trim());
-                        if (salario < 0) {
-                            JOptionPane.showMessageDialog(null, "Campo não pode ser negativo, tente novamente");
+                        boolean existeNome = false;
+                        for (Funcionario funcionario : funcionarios) {
+                            if (funcionario.nome.equalsIgnoreCase(nomeFuncionario)) {
+                                existeNome = true;
+                                break;
+                            }
+                        }
+                        if (existeNome) {
+                            JOptionPane.showMessageDialog(null, "Já existe um funcionário com esse nome, escolha outro por gentileza");
                             break;
                         }
-                    } catch (NumberFormatException e) {
-                        JOptionPane.showMessageDialog(null, "Salário inválido, tente novamente");
-                        break;
+                        
+                        String funcaoFuncionario = JOptionPane.showInputDialog("Insira função do funcionário\n\n");
+                        if (funcaoFuncionario == null || funcaoFuncionario.trim().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
+                            break;
+                        }
+                        String salarioFuncionario = JOptionPane.showInputDialog("Insira salário do funcionário\n\n");
+                        if (salarioFuncionario == null || salarioFuncionario.trim().isEmpty()) {
+                            JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
+                            break;
+                        }
+                        double salario = 0;
+                        try {
+                            salario = Double.parseDouble(salarioFuncionario.trim());
+                            if (salario < 0) {
+                                JOptionPane.showMessageDialog(null, "Campo não pode ser negativo, tente novamente");
+                                break;
+                            }
+                        } catch (NumberFormatException e) {
+                            JOptionPane.showMessageDialog(null, "Salário inválido, tente novamente");
+                            break;
+                        }
+                        funcionarios.add(new Funcionario(nomeFuncionario, funcaoFuncionario, salario));
+                        int confirmacaoAdiciona = JOptionPane.showConfirmDialog(
+                                null,
+                                "Funcionário cadastrado com sucesso. Deseja adicionar outro?\n\n",
+                                "Confirmação",
+                                JOptionPane.YES_NO_OPTION
+                        );
+                        if (confirmacaoAdiciona == JOptionPane.NO_OPTION) {
+                            incrementaFuncionario = false;
+                        }
+                        if (confirmacaoAdiciona == JOptionPane.CLOSED_OPTION) {
+                            incrementaFuncionario = false;
+                        }
                     }
-                    funcionarios.add(new Funcionario(nomeFuncionario, funcaoFuncionario, salario));
-                    JOptionPane.showMessageDialog(null, "Funcionário cadastrado com sucesso.");
                     break;
                 case 2:
                     if (funcionarios.isEmpty()) {
@@ -102,7 +119,7 @@ public class Crud_inicial {
                             if (funcionario.nome.equalsIgnoreCase(nomeBuscaFuncionario)) {
                                 encontrado = true;
                                 String opcaoModificar = JOptionPane.showInputDialog("Funcionário encontrado! Escolha o que mudar nesse funcionário\n\n"
-                                        + "1 -  Nome\n2 - Função\n3 - Salário\n\n");
+                                        + "1 -  Nome\n2 - Função\n3 - Salário\n4 -  Sair\n\n");
                                 if (opcaoModificar == null) {
                                     break;
                                 }
@@ -135,12 +152,14 @@ public class Crud_inicial {
                                     } catch (NumberFormatException e) {
                                         JOptionPane.showMessageDialog(null, "Salário inválido, tente novamente");
                                     }
+                                } else if (escolhaModificar == 4) {
+                                    break;
                                 } else {
                                     JOptionPane.showMessageDialog(null, "opção inválida :(\n\n");
                                 }
                                 break;
                             }
-
+                            
                         }
                         if (!encontrado) {
                             JOptionPane.showMessageDialog(null, "Funcionário não encontrado");
@@ -173,12 +192,13 @@ public class Crud_inicial {
                     break;
                 case 5:
                     JOptionPane.showMessageDialog(null, "Até mais");
+                    System.exit(0);
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida, tente novamente");
             }
-
+            
         }
     }
-
+    
 }
