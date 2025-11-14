@@ -8,22 +8,22 @@ import java.util.ArrayList;
  * @author cristian.moreira
  */
 public class Crud_inicial {
-    
+
     static class Funcionario {
-        
+
         String nome;
         String funcao;
         double salario;
-        
+
         public Funcionario(String nome, String funcao, double salario) {
             this.nome = nome;
             this.funcao = funcao;
             this.salario = salario;
         }
     }
-    
+
     static ArrayList<Funcionario> funcionarios = new ArrayList<>();
-    
+
     public static void main(String[] args) {
         while (true) {
             String opcao = JOptionPane.showInputDialog("Programa de cadastro de funcionarios da ABER\n\nEscolha uma opção:\n1 - Cadastrar Funcionário"
@@ -48,6 +48,10 @@ public class Crud_inicial {
                             JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
                             break;
                         }
+                        if (nomeFuncionario.trim().matches(".*\\d.*")) {
+                            JOptionPane.showMessageDialog(null, "Nome do funcionário não pode conter números!");
+                            break;
+                        }
                         boolean existeNome = false;
                         for (Funcionario funcionario : funcionarios) {
                             if (funcionario.nome.equalsIgnoreCase(nomeFuncionario)) {
@@ -59,7 +63,7 @@ public class Crud_inicial {
                             JOptionPane.showMessageDialog(null, "Já existe um funcionário com esse nome, escolha outro por gentileza");
                             break;
                         }
-                        
+
                         String funcaoFuncionario = JOptionPane.showInputDialog("Insira função do funcionário\n\n");
                         if (funcaoFuncionario == null || funcaoFuncionario.trim().isEmpty()) {
                             JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
@@ -70,11 +74,14 @@ public class Crud_inicial {
                             JOptionPane.showMessageDialog(null, "Campo não pode ser vazio");
                             break;
                         }
-                        double salario = 0;
+                        double salario = 1;
                         try {
                             salario = Double.parseDouble(salarioFuncionario.trim());
                             if (salario < 0) {
                                 JOptionPane.showMessageDialog(null, "Campo não pode ser negativo, tente novamente");
+                                break;
+                            } else if (salario == 0) {
+                                JOptionPane.showMessageDialog(null, "Salário não pode ser 0, tente novamente");
                                 break;
                             }
                         } catch (NumberFormatException e) {
@@ -159,7 +166,7 @@ public class Crud_inicial {
                                 }
                                 break;
                             }
-                            
+
                         }
                         if (!encontrado) {
                             JOptionPane.showMessageDialog(null, "Funcionário não encontrado");
@@ -197,8 +204,8 @@ public class Crud_inicial {
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida, tente novamente");
             }
-            
+
         }
     }
-    
+
 }
