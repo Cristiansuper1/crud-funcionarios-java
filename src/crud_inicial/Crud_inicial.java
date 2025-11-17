@@ -2,6 +2,8 @@ package crud_inicial;
 
 import javax.swing.JOptionPane;
 import java.util.ArrayList;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
@@ -24,11 +26,83 @@ public class Crud_inicial {
 
     static ArrayList<Funcionario> funcionarios = new ArrayList<>();
 
-    public static void main(String[] args) {
+    static Map<String, String> usuarios = new HashMap<>();
+
+    static Map<String, Boolean> permissoes = new HashMap<>();
+
+    static void usuariosTeste() {
+        usuarios.put("admin", "admin123");
+        permissoes.put("admin", true);
+
+        usuarios.put("zezinho", "zezinho123");
+        permissoes.put("zezinho", false);
+
+        usuarios.put("clarinha", "clarinha123");
+        permissoes.put("clarinha", false);
+    }
+
+    static String autenticar() {
         while (true) {
-            String opcao = JOptionPane.showInputDialog("Programa de cadastro de funcionarios da ABER\n\nEscolha uma opção:\n1 - Cadastrar Funcionário"
-                    + "\n2 - Listar funcionários existentes\n3 - Modificar funcionário\n4 - Excluir funcionário\n"
-                    + "5 - Sair do Programa\n\n");
+            String usuario = JOptionPane.showInputDialog("=== LOGIN ABER ===\n\nInsira nome de usuário:\n\n");
+
+            if (usuario == null) {
+                return null;
+            }
+
+            if (usuario.trim().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Nome de usuário não pode ser vazio");
+                continue;
+            }
+
+            String senha = JOptionPane.showInputDialog("Insira sua senha:\n\n");
+
+            if (senha == null) {
+                return null;
+            }
+
+            if (usuarios.containsKey(usuario) && usuarios.get(usuario).equals(senha)) {
+                boolean isAdmin = permissoes.get(usuario);
+                String tipoUsuario = isAdmin ? "Administrador" : "Usuário comum";
+                JOptionPane.showMessageDialog(null,
+                        "Login bem sucedido.\n\nBem-vindo, " + usuario
+                        + "\nTipo: " + tipoUsuario);
+                return usuario;
+            } else {
+                JOptionPane.showMessageDialog(null,
+                        "Usuário ou senha incorretos.\n\nTente novamente.");
+            }
+        }
+    }
+
+    public static void main(String[] args) {
+        usuariosTeste();
+        String usuarioLogado = autenticar();
+        if (usuarioLogado == null) {
+            JOptionPane.showMessageDialog(null, "Usuario não autenticado.\n\nEncerando programa...");
+            System.exit(0);
+        }
+
+        boolean ehAdmin = permissoes.get(usuarioLogado);
+
+        while (true) {
+            String menu;
+            if (ehAdmin) {
+                menu = "Programa de cadastro de funcionarios da ABER\n"
+                        + "Usuário: " + usuarioLogado + " (Administrador)\n\n"
+                        + "Escolha uma opção:\n"
+                        + "1 - Cadastrar Funcionário\n"
+                        + "2 - Listar funcionários existentes\n"
+                        + "3 - Modificar funcionário\n"
+                        + "4 - Excluir funcionário\n"
+                        + "5 - Sair do Programa\n\n";
+            } else {
+                menu = "Programa de cadastro de funcionarios da ABER\n"
+                        + "Usuário: " + usuarioLogado + " (Usuário comum)\n\n"
+                        + "Escolha uma opção:\n"
+                        + "2 - Listar funcionários existentes\n"
+                        + "5 - Sair do Programa\n\n";
+            }
+            String opcao = JOptionPane.showInputDialog(menu);
             if (opcao == null) {
                 break;
             }
@@ -207,5 +281,4 @@ public class Crud_inicial {
 
         }
     }
-
 }
