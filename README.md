@@ -1,54 +1,49 @@
 # Sistema CRUD de Funcionários
 
-Sistema de gerenciamento de funcionários desenvolvido em Java utilizando interface gráfica Swing (JOptionPane).
+Sistema de gerenciamento de funcionários feito em Java com interface gráfica usando Swing (JOptionPane)
 
-## 📋 Sobre o Projeto
+## Sobre o projeto
 
-Este é um projeto de aprendizado que simula um sistema de cadastro para a empresa ABER. O sistema permite realizar operações básicas de CRUD (Create, Read, Update, Delete) para gerenciar informações de funcionários.
+Projeto de estudo que simula um sistema de cadastro pra empresa ABER. Basicamente um CRUD pra gerenciar funcionários
 
-## ⚙️ Funcionalidades
+## Funcionalidades
 
-- **Cadastrar Funcionário**: Adiciona um novo funcionário com nome, função e salário
-- **Listar Funcionários**: Exibe todos os funcionários cadastrados
-- **Modificar Funcionário**: Permite alterar nome, função ou salário de um funcionário existente
-- **Excluir Funcionário**: Remove um funcionário do sistema
-- **Validações**: O sistema valida entradas duplicadas, campos vazios e valores inválidos
+- **Cadastrar Funcionário**: Adiciona funcionário com nome, função e salário
+- **Listar Funcionários**: Mostra todos os funcionários cadastrados
+- **Modificar Funcionário**: Altera dados de um funcionário existente
+- **Excluir Funcionário**: Remove funcionário do sistema
+- **Validações**: Verifica duplicatas, campos vazios e valores inválidos
 
-## 🚀 Tecnologias Utilizadas
+## Tecnologias
 
 - Java
-- Swing (JOptionPane para interface gráfica)
-- ArrayList para armazenamento de dados
+- Swing (JOptionPane)
+- ArrayList
 
-## 💻 Como Executar
+## Como rodar
 
 ### Pré-requisitos
-- JDK 8 ou superior instalado
-- IDE Java (NetBeans, Eclipse, IntelliJ) ou terminal com javac
+- JDK 8+
+- Qualquer IDE Java ou terminal com javac
 
-### Passos para executar:
-
-1. Clone este repositório:
+### Executanto
 
 git clone https://github.com/Cristiansuper1/crud-funcionarios-java.git
 
-2. Abra o projeto em sua IDE ou navegue até a pasta pelo terminal
+Abre na IDE ou vai pela pasta no terminal e roda a classe Crud_inicial.java
 
-3. Execute a classe principal `Crud_inicial.java`
+## O que aprendi
 
-## 📚 Aprendizados
-
-Este projeto me ajudou a praticar:
-- Programação Orientada a Objetos (classes e objetos)
-- Manipulação de coleções (ArrayList)
-- Tratamento de exceções (try-catch)
-- Validação de entrada de dados
+- POO (classes e objetos)
+- ArrayList
+- Try-catch
+- Validação de input
 - Interface gráfica com Swing
 
-## 👨‍💻 Autor
+## Autor
 
 Cristian - Estudante de Análise e Desenvolvimento de Sistemas na Fatec Campinas
 
-## 📝 Licença
+## Licença
 
-Este projeto é de código aberto e está disponível para fins educacionais.
+Código aberto pra fins educacionais
