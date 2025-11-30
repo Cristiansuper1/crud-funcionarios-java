@@ -4,14 +4,13 @@ Todas as alterações relevantes para o projeto serão documentadas neste arquiv
 
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/).
 
-## [Unreleased]
+## [Ainda não feito]
 ### Planejado
-- Verificação por tipo de funcionário que irá acessar o sistema (admin e comum)
-- Criação de usuários por meio de um banco de dados simples
-- Admin fixo para manutenção
-- Melhorias no visual gráfico
-- Correção de bugs
-- Criação do FEATURES.md e ARCHITECTURE.md, além de documento docs mostrando a regra de negócio conceituada
+- Verificação de tipo de usuário no login (admin/comum)
+- Sistema de usuários com banco de dados básico
+- Admin fixo pra manutenção do sistema
+- Melhorias visuais
+- Docs: FEATURES.md, ARCHITECTURE.md e documentação de regras de negócio
 
 ## [1.3.1] – 2025-11-30
 ### Adicionado
