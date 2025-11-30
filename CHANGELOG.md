@@ -13,6 +13,20 @@ O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.
 - Correção de bugs
 - Criação do FEATURES.md e ARCHITECTURE.md, além de documento docs mostrando a regra de negócio conceituada
 
+## [1.3.1] – 2025-11-30
+### Adicionado
+- Verificação de permissões nos cases 1, 3 e 4 do menu principal. Antes dava pra usuário comum digitar o número direto e executar operação restrita, agora não mais
+- Mensagem de "Acesso negado!" quando usuário comum tenta acessar função de admin
+  
+### Correções
+- Variável ehAdminLogado declarada duas vezes, removida duplicata
+- System.out(0) trocado por System.exit(0) na finalização
+- ehAdmin não existia, trocado por ehAdminLogado
+- Autenticação estava tentando atribuir String em boolean, corrigido.
+
+### Melhorias
+- Controle de acesso agora funciona de verdade. Create, Update e Delete só pra admin, usuário comum só lista
+
 ## [1.3.0] - 2025-11-17
 ### Adicionado
 - Sistema de autenticação com login e senha
