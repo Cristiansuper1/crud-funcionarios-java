@@ -24,21 +24,58 @@ public class Crud_inicial {
         }
     }
 
+    static class Usuario {
+
+        String nome;
+        String senha;
+        String nivel;
+
+        public Usuario(String nome, String senha, String nivel) {
+            this.nome = nome;
+            this.senha = senha;
+            this.nivel = nivel;
+        }
+
+        public String getNome() {
+            return nome;
+        }
+
+        public String getSenha() {
+            return senha;
+        }
+
+        public String getNivel() {
+            return nivel;
+        }
+
+        public void setNome(String nome) {
+            this.nome = nome;
+        }
+
+        public void setSenha(String senha) {
+            this.senha = senha;
+        }
+
+        public void setNivel(String nivel) {
+            this.nivel = nivel;
+        }
+
+    }
+
+    public enum nivel {
+        ADMIN,
+        COMUM
+    }
+
     static ArrayList<Funcionario> funcionarios = new ArrayList<>();
+    static Map<String, Usuario> nomeUsuario = new HashMap<>();
 
-    static Map<String, String> usuarios = new HashMap<>();
-
-    static Map<String, Boolean> permissoes = new HashMap<>();
-
+   
     static void usuariosTeste() {
-        usuarios.put("admin", "admin123");
-        permissoes.put("admin", true);
-
-        usuarios.put("zezinho", "zezinho123");
-        permissoes.put("zezinho", false);
-
-        usuarios.put("clarinha", "clarinha123");
-        permissoes.put("clarinha", false);
+        nomeUsuario.put("admin", new Usuario("admin", "admin123", "ADMIN"));
+        nomeUsuario.put("claudio", new Usuario("claudio", "claudio123", "COMUM"));
+        nomeUsuario.put("fernanda", new Usuario("fernanda", "fernanda123", "COMUM"));
+        
     }
 
     static String autenticar() {
@@ -60,9 +97,9 @@ public class Crud_inicial {
                 return null;
             }
 
-            if (usuarios.containsKey(usuario) && usuarios.get(usuario).equals(senha)) {
-                boolean isAdmin = permissoes.get(usuario);
-                String tipoUsuario = isAdmin ? "Administrador" : "Usuário comum";
+            if (nomeUsuario.containsKey(usuario) && nomeUsuario.get(usuario).getSenha().equals(senha)) {
+                String nivelUsuario = nomeUsuario.get(usuario).getNivel();
+                String tipoUsuario = nivelUsuario.equals("ADMIN") ? "Administrador" : "Usuário comum";
                 JOptionPane.showMessageDialog(null,
                         "Login bem sucedido.\n\nBem-vindo, " + usuario
                         + "\nTipo: " + tipoUsuario);
@@ -73,20 +110,26 @@ public class Crud_inicial {
             }
         }
     }
+    
+    static boolean ehAdmin(String usuarioLogado) {
+        Usuario usuario = nomeUsuario.get(usuarioLogado);
+        return usuario != null && usuario.getNivel().equals("ADMIN");
+    }
 
     public static void main(String[] args) {
         usuariosTeste();
         String usuarioLogado = autenticar();
+        
         if (usuarioLogado == null) {
-            JOptionPane.showMessageDialog(null, "Usuario não autenticado.\n\nEncerando programa...");
+            JOptionPane.showMessageDialog(null, "Usuário não autenticado.\n\nEncerrando programa...");
             System.exit(0);
         }
 
-        boolean ehAdmin = permissoes.get(usuarioLogado);
+        boolean ehAdminLogado = ehAdmin(usuarioLogado);
 
         while (true) {
             String menu;
-            if (ehAdmin) {
+            if (ehAdminLogado) {
                 menu = "Programa de cadastro de funcionarios da ABER\n"
                         + "Usuário: " + usuarioLogado + " (Administrador)\n\n"
                         + "Escolha uma opção:\n"
@@ -115,6 +158,11 @@ public class Crud_inicial {
             }
             switch (escolha) {
                 case 1:
+                    if (!ehAdminLogado) {
+                        JOptionPane.showMessageDialog(null, "Acesso negado. Apenas administradores podem cadastrar funcionários");
+                        break;
+                    }
+                    
                     boolean incrementaFuncionario = true;
                     while (incrementaFuncionario) {
                         String nomeFuncionario = JOptionPane.showInputDialog("Insira nome do funcionario\n\n");
@@ -191,6 +239,11 @@ public class Crud_inicial {
                     }
                     break;
                 case 3:
+                    if (!ehAdminLogado) {
+                        JOptionPane.showMessageDialog(null, "Acesso negado. Apenas administradores podem modificar funcionários");
+                        break;
+                    }
+                    
                     if (funcionarios.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Nenhum funcionário para modificar");
                     } else {
@@ -229,7 +282,7 @@ public class Crud_inicial {
                                     try {
                                         salarioAlteracao = Double.parseDouble(novoSalario.trim());
                                         funcionario.salario = salarioAlteracao;
-                                        JOptionPane.showMessageDialog(null, "Salário alterado com seucesso\n\n");
+                                        JOptionPane.showMessageDialog(null, "Salário alterado com sucesso\n\n");
                                     } catch (NumberFormatException e) {
                                         JOptionPane.showMessageDialog(null, "Salário inválido, tente novamente");
                                     }
@@ -248,6 +301,11 @@ public class Crud_inicial {
                     }
                     break;
                 case 4:
+                    if (!ehAdminLogado) {
+                        JOptionPane.showMessageDialog(null, "Acesso negado. Apenas administradores podem excluir funcionários");
+                        break;
+                    }
+                    
                     if (funcionarios.isEmpty()) {
                         JOptionPane.showMessageDialog(null, "Nenhum funcionário para excluir");
                     } else {
